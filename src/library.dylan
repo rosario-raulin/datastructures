@@ -1,26 +1,28 @@
 module: dylan-user
 
 define library datastructures
-  use dylan;
+  use common-dylan;
   
   export
     fundamentals;
 end library datastructures;
 
 define module datastructures
-  use dylan;
+  use common-dylan;
 
   export
     <datastructure>;
 end module datastructures;
 
 define module fundamentals
-  use dylan;
+  use common-dylan;
   use datastructures;
   
   export
     <fundamental-collection>,
     <stack>,
+    <array-stack>,
+    <list-stack>,
     push!,
     pop!,
     get-size,

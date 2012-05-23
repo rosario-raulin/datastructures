@@ -1,14 +1,18 @@
 module: fundamentals
 
+define constant $default-stack-capacity :: <integer> = 16;
+
 define class <array-stack> (<stack>)
-  slot size :: <integer>, init-keyword: n:, init-value: 0;
-  slot items :: <vector>, init-value: make(<vector>, size: 16);
+  slot size :: <integer>, init-value: 0;
+  slot items :: <vector>;
 end class <array-stack>;
 
-// We make <array-stack> the default <stack> implementation
-define method make (the-class == <stack>, #rest init-args, #key) => (stack)
-  apply(make, <array-stack>, init-args)
-end method make;
+define method initialize (stack :: <array-stack>, #key
+                            capacity :: <integer> = $default-stack-capacity,
+                          #all-keys)
+  next-method();
+  stack.items := make(<vector>, size: capacity);
+end method initialize;
 
 define method get-size (stack :: <array-stack>) => (size :: <integer>)
   stack.size
