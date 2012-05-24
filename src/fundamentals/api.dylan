@@ -11,3 +11,9 @@ end class <stack>;
 
 define generic pop! (stack) => (element);
 define generic push! (stack, element) => ();
+
+define abstract class <queue> (<fundamental-collection>)
+end class <queue>;
+
+define generic dequeue (queue) => (element);
+define generic enqueue (queue, element) => ();

@@ -20,11 +20,15 @@ define module fundamentals
   
   export
     <fundamental-collection>,
+    get-size,
+    is-empty?,
     <stack>,
     <array-stack>,
     <list-stack>,
     push!,
     pop!,
-    get-size,
-    is-empty?;
+    <queue>,
+    <list-queue>,
+    enqueue,
+    dequeue;
 end module fundamentals;
