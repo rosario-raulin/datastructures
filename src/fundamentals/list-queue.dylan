@@ -16,7 +16,7 @@ define method get-size (queue :: <list-queue>) => (size :: <integer>)
 end method get-size;
 
 define method is-empty? (queue :: <list-queue>) => (empty-p :: <boolean>)
-  top = #f
+  top(queue) = #f
 end method is-empty?;
 
 define method enqueue! (queue :: <list-queue>, element) => ()

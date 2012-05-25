@@ -1,6 +1,6 @@
 library:	datastructures-test
 files:	library.dylan
-	fundamentals/stack-test.dylan
-	fundamentals/queue-test.dylan
+	fundamentals/stack.dylan
+	fundamentals/queue.dylan
 	fundamentals/test.dylan
 	test.dylan
