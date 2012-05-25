@@ -20,7 +20,7 @@ end method is-empty?;
 
 define method pop! (stack :: <list-stack>) => (element)
   if (is-empty?(stack))
-    error("Stack is empty!");
+    error("Stack is empty");
   else
     let element = top(stack).value;
     stack.top := top(stack).next;
@@ -31,9 +31,7 @@ end method pop!;
 
 define method push! (stack :: <list-stack>, element) => ()
   let new :: <node> = make(<node>, value: element);
-  if (top(stack))
-    new.next := top(stack);
-  end if;
+  new.next := top(stack);
   stack.top := new;
   stack.size := stack.size + 1;
 end method push!;

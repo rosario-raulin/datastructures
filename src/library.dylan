@@ -2,6 +2,7 @@ module: dylan-user
 
 define library datastructures
   use common-dylan;
+  use io;
   
   export
     fundamentals;
@@ -17,6 +18,7 @@ end module datastructures;
 define module fundamentals
   use common-dylan;
   use datastructures;
+  use format-out;
   
   export
     <fundamental-collection>,
@@ -29,6 +31,6 @@ define module fundamentals
     pop!,
     <queue>,
     <list-queue>,
-    enqueue,
-    dequeue;
+    enqueue!,
+    dequeue!;
 end module fundamentals;
