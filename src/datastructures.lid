@@ -6,3 +6,4 @@ files:	library.dylan
 	fundamentals/array-stack.dylan
 	fundamentals/list-stack.dylan
 	fundamentals/list-queue.dylan
+	symbol-tables/api.dylan

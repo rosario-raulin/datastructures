@@ -2,10 +2,10 @@ module: dylan-user
 
 define library datastructures
   use common-dylan;
-  use io;
-  
+    
   export
-    fundamentals;
+    fundamentals,
+    symbol-tables;
 end library datastructures;
 
 define module datastructures
@@ -18,8 +18,7 @@ end module datastructures;
 define module fundamentals
   use common-dylan;
   use datastructures;
-  use format-out;
-  
+    
   export
     <fundamental-collection>,
     get-size,
@@ -34,3 +33,16 @@ define module fundamentals
     enqueue!,
     dequeue!;
 end module fundamentals;
+
+define module symbol-tables
+  use common-dylan;
+  use datastructures;
+
+  export
+    <symbol-table>,
+    put!,
+    get,
+    delete!,
+    contains?,
+    keys;
+end module symbol-tables;
