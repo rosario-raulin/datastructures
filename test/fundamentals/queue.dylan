@@ -1,32 +1,25 @@
 module: fundamentals-test
 
-define function queue-test-small () => ()
-  let q :: <queue> = make(<queue>);
+define constant $queue-test-limit :: <integer> = 500000;
 
-  for (i :: <integer> from 1 to 100)
+define function queue-test () => ()
+  let q :: <queue> = make(<queue>);
+  
+  for (i :: <integer> from 1 to $queue-test-limit)
     enqueue!(q, i);
   end for;
 
   let size :: <integer> = get-size(q);
-  format-out("The size of the queue: %d\n", size);
+  if (size ~= $queue-test-limit)
+    error("push!() does not properly work");
+  end if;
 
   for-each (e in q)
-    format-out("%d\n", e);
   end for-each;
 
   if (size ~= get-size(q))
     error("for-each() destroyed the original queue");
   end if;
-end function queue-test-small;
-
-define function queue-test-large () => ()
-  let q :: <queue> = make(<queue>);
-
-  for (i :: <integer> from 1 to 5000000)
-    enqueue!(q, i);
-  end for;
-
-  format-out("The size of the queue: %d\n", get-size(q));
 
   for-each! (e in q)
   end for-each!;
@@ -34,4 +27,4 @@ define function queue-test-large () => ()
   if (get-size(q) ~= 0)
     error("for-each!() did not properly modify the queue");
   end if;
-end function queue-test-large;
+end function queue-test;
