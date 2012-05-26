@@ -7,12 +7,16 @@ define function queue-test-small () => ()
     enqueue!(q, i);
   end for;
 
-  format-out("The size of the queue: %d\n", get-size(q));
+  let size :: <integer> = get-size(q);
+  format-out("The size of the queue: %d\n", size);
 
-  until (is-empty?(q))
-    let e :: <integer> = dequeue!(q);
-    format-out("%=\n", e);
-  end until;
+  for-each (e in q)
+    format-out("%d\n", e);
+  end for-each;
+
+  if (size ~= get-size(q))
+    error("for-each() destroyed the original queue");
+  end if;
 end function queue-test-small;
 
 define function queue-test-large () => ()
@@ -24,9 +28,10 @@ define function queue-test-large () => ()
 
   format-out("The size of the queue: %d\n", get-size(q));
 
-  until (is-empty?(q))
-    let e :: <integer> = dequeue!(q);
-  end until;
+  for-each! (e in q)
+  end for-each!;
 
-  format-out("It should now be 0: %d\n", get-size(q));
+  if (get-size(q) ~= 0)
+    error("for-each!() did not properly modify the queue");
+  end if;
 end function queue-test-large;

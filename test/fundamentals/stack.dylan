@@ -1,33 +1,30 @@
 module: fundamentals-test
 
-define function stack-test-small () => ()
-  let s :: <stack> = make(<stack>);
-  // let s :: <stack> = make(<array-stack>);
+define constant $stack-test-limit :: <integer> = 500000;
 
-  for (i :: <integer> from 1 to 100)
+define function stack-test () => ()
+  let s :: <stack> = make(<stack>);
+  
+  for (i :: <integer> from 1 to $stack-test-limit)
     push!(s, i);
   end for;
 
-  format-out("The size of the stack: %d\n", get-size(s));
+  let size :: <integer> = get-size(s);
+  if (size ~= $stack-test-limit)
+    error("push!() does not properly work");
+  end if;
 
-  until (is-empty?(s))
-    let e :: <integer> = pop!(s);
-    format-out("%d\n", e);
-  end until;
-end function stack-test-small;
+  for-each (e in s)
+  end for-each;
 
-define function stack-test-large () => ()
-  let s :: <stack> = make(<stack>);
-  // let s :: <stack> = make(<array-stack>);
+  if (size ~= get-size(s))
+    error("for-each() destroyed the original stack");
+  end if;
 
-  for (i :: <integer> from 1 to 5000000)
-    push!(s, i);
-  end for;
+  for-each! (e in s)
+  end for-each!;
 
-  format-out("The size of the stack: %d\n", get-size(s));
-
-  until (is-empty?(s))
-    let e :: <integer> = pop!(s);
-  end until;
-  format-out("It should now be 0: %d\n", get-size(s));
-end function stack-test-large;
+  if (get-size(s) ~= 0)
+    error("for-each!() did not properly modify the stack");
+  end if;
+end function stack-test;

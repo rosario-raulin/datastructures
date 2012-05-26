@@ -1,8 +1,13 @@
 module: test
 
 define function main () => ()
-  format-out("Testing fundamentals:\n");
-  run-fundamentals-test();
+  block ()
+    run-fundamentals-test();
+
+    format-out("All tests passed.\n");
+  exception (e :: <condition>)
+    format-out("%=\n", e);
+  end block;
 end function main;
 
 main();

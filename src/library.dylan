@@ -5,6 +5,7 @@ define library datastructures
     
   export
     fundamentals,
+    iterator,
     symbol-tables;
 end library datastructures;
 
@@ -15,9 +16,24 @@ define module datastructures
     <datastructure>;
 end module datastructures;
 
+define module iterator
+  use common-dylan;
+ 
+  export
+    <iterator>,
+    <iterable>,
+    has-next?,
+    get-next!,
+    get-iterator,
+    get-iterator!,
+    for-each,
+    for-each!;
+end module iterator;
+
 define module fundamentals
   use common-dylan;
   use datastructures;
+  use iterator;
     
   export
     <fundamental-collection>,
