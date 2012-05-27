@@ -60,6 +60,7 @@ define module symbol-tables
 
   export
     <symbol-table>,
+    <key-not-found>,
     <list-table>,
     <binary-search-tree>,
     put!,
