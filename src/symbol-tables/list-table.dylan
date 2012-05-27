@@ -1,12 +1,15 @@
 module: symbol-tables
 
-define class <table-node> (<node>)
-  slot key, required-init-keyword: key:;
+define class <table-node> (<object>)
+  constant slot key, required-init-keyword: key:;
+  slot value, required-init-keyword: value:;
+  constant slot next :: false-or(<table-node>), init-keyword: next:,
+    init-value: #f;
 end class <table-node>;
 
 define class <list-table> (<symbol-table>)
   slot size :: <integer>, init-value: 0;
-  slot head :: false-or(<table-node>), init-value: #f;
+  slot top :: false-or(<table-node>), init-value: #f;
 end class <list-table>;
 
 define method is-empty? (table :: <list-table>) => (empty-p :: <boolean>)
@@ -17,59 +20,45 @@ define method get-size (table :: <list-table>) => (size :: <integer>)
   size(table)
 end method get-size;
 
-define method put! (table :: <list-table>, key, value) => ()
-  let curr :: false-or(<table-node>) = head(table);
+define method put! (table :: <list-table>, new-key, new-value) => ()
+  let curr :: false-or(<table-node>) = top(table);
+
   block (return)
     while (curr)
-      if (curr.key = key)
-        curr.value := value;
-        return();
+      if (key(curr) = new-key)
+        curr.value := new-value;
+        return(#f);
       else
         curr := curr.next;
       end if;
     end while;
-    table.head := make(<table-node>, key: key, value: value, next: table.head);
+    table.top :=
+      make(<table-node>, key: new-key, value: new-value, next: table.top);
+    table.size := size(table) + 1;
   end block;
 end method put!;
 
-define method get (table :: <list-table>, key) => (value)
-  let curr :: false-or(<table-node>) = head(table);
+define method get (table :: <list-table>, element-key) => (value)
+  let curr :: false-or(<table-node>) = top(table);
 
   block (return)
     while (curr)
-      if (curr.key = key)
-        return(#t);
+      if (key(curr) = element-key)
+        return(value(curr));
       end if;
-      curr := curr.next;
+      curr := next(curr);
     end while;
     
-    error("Key not found");
-  end block;
-end method get;
-
-define method delete! (table :: <list-table>, key) => ()
-  
-end method delete!;
-
-define method contains? (table :: <list-table>, key) => (contain-p :: <boolean>)
-  let curr :: false-or(<table-node>) = head(table);
-
-  block (return)
-    while (curr)
-      if (curr.key = key)
-        return(#t);
-      end if;
-    end while;
-    return(#f);
+    signal(make(<key-not-found>, value: element-key));
   end block
-end method contains?;
+end method get;
 
 define method keys (table :: <list-table>) => (keys)
   let keys :: <stack> = make(<stack>);
-  let curr :: false-or(<table-node>) = head(table>);
+  let curr :: false-or(<table-node>) = top(table);
   
   while (curr)
-    keys.push(curr.key);
+    push!(keys, curr.key);
     curr := curr.next;
   end while;
   keys

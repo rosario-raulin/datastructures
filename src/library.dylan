@@ -2,8 +2,10 @@ module: dylan-user
 
 define library datastructures
   use common-dylan;
+  use io;
     
   export
+    datastructures,
     fundamentals,
     iterator,
     symbol-tables;
@@ -13,7 +15,9 @@ define module datastructures
   use common-dylan;
 
   export
-    <datastructure>;
+    <datastructure>,
+    is-empty?,
+    get-size;
 end module datastructures;
 
 define module iterator
@@ -37,8 +41,6 @@ define module fundamentals
     
   export
     <fundamental-collection>,
-    get-size,
-    is-empty?,
     <stack>,
     <array-stack>,
     <list-stack>,
@@ -53,9 +55,13 @@ end module fundamentals;
 define module symbol-tables
   use common-dylan;
   use datastructures;
+  use fundamentals;
+  use format-out;
 
   export
     <symbol-table>,
+    <list-table>,
+    <binary-search-tree>,
     put!,
     get,
     delete!,

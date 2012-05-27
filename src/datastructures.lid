@@ -9,3 +9,7 @@ files:	library.dylan
 	fundamentals/list-queue.dylan
 	fundamentals/iterators.dylan
 	symbol-tables/api.dylan
+	symbol-tables/list-table.dylan
+	symbol-tables/bst.dylan
+
+

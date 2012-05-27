@@ -3,11 +3,6 @@ module: fundamentals
 define abstract class <fundamental-collection> (<datastructure>)
 end class <fundamental-collection>;
 
-define generic get-size
-    (collection :: <fundamental-collection>) => (size :: <integer>);
-define generic is-empty?
-    (collection :: <fundamental-collection>) => (empty-p :: <boolean>);
-
 define abstract class <stack> (<fundamental-collection>, <iterable>)
 end class <stack>;
 

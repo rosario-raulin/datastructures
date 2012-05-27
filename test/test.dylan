@@ -3,6 +3,7 @@ module: test
 define function main () => ()
   block ()
     run-fundamentals-test();
+    run-symbol-tables-test();
 
     format-out("All tests passed.\n");
   exception (e :: <condition>)

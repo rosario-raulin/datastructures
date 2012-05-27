@@ -1,13 +1,25 @@
-module: symbol-tables
+module: symbol-tables-test
 
-define function test-client (entries :: <vector>) => ()
-  let table :: <symbol-table> = make(<list-table>);
+define constant $test-client-words :: <vector>
+  = #["S", "E", "A", "R", "C", "H", "E", "X", "A", "M", "P", "L", "E"];
 
-  for (entry :: <string> in entries, i :: <integer> from 0)
-    table.put(entry, i);
+define function test-client (table :: <symbol-table>) => ()
+  for (word :: <string> in $test-client-words, i :: <integer> from 0)
+    put!(table, word, i);
   end for;
 
-  for (key in table.keys())
-    format-out("%s - %d\n", key, table.get(key));
-  end for;
+  case
+    get(table, "E") ~= 12
+      => error("E's value: %d", get(table, "E"));
+    get(table, "S") ~= 0
+      => error("S's value: %d", get(table, "S"));
+    get(table, "A") ~= 8
+      => error("A's value: %d", get(table, "A"));
+    get-size(table) ~= 10
+      => error("get-size(table) = %d", get-size(table));
+    ~ contains?(table, "X")
+      => error("X should be in the table");
+    contains?(table, "42")
+      => error("42 shouldn't be there...");
+  end case;
 end function test-client;
