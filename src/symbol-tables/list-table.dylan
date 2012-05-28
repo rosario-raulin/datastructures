@@ -53,7 +53,7 @@ define method get (table :: <list-table>, element-key) => (value)
   end block
 end method get;
 
-define method keys (table :: <list-table>) => (keys)
+define method keys (table :: <list-table>) => (keys :: <iterable>)
   let keys :: <stack> = make(<stack>);
   let curr :: false-or(<table-node>) = top(table);
   

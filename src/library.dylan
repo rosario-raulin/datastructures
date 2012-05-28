@@ -56,7 +56,7 @@ define module symbol-tables
   use common-dylan;
   use datastructures;
   use fundamentals;
-  use format-out;
+  use iterator;
 
   export
     <symbol-table>,

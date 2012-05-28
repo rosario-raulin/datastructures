@@ -17,7 +17,7 @@ define method get-size (node :: false-or(<binary-node>)) => (size :: <integer>)
 end method get-size;
 
 define method get-size (tree :: <binary-search-tree>) => (size :: <integer>)
-  size(root(tree))
+  get-size(root(tree))
 end method get-size;
 
 define method is-empty? (tree :: <binary-search-tree>) => (empty-p :: <boolean>)
@@ -58,3 +58,19 @@ define method get (table :: <binary-search-tree>, entry-key) => (entry-value)
 
   get-intern(root(table))
 end method get;
+
+define method keys (table :: <binary-search-tree>) => (keys :: <iterable>)
+  local method keys-intern
+            (node :: false-or(<binary-node>), key-collection :: <queue>)
+         => (keys :: <queue>)
+          if (~ node)
+            key-collection
+          else
+            keys-intern(left(node), key-collection);
+            enqueue!(key-collection, key(node));
+            keys-intern(right(node), key-collection);
+          end if;
+        end method keys-intern;
+
+  keys-intern(root(table), make(<list-queue>))
+end method keys;

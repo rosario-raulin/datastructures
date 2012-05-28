@@ -21,5 +21,7 @@ define function test-client (table :: <symbol-table>) => ()
       => error("X should be in the table");
     contains?(table, "42")
       => error("42 shouldn't be there...");
+    get-size(keys(table)) ~= 10
+      => error("get-size(keys(table)) = %d", get-size(keys(table)));
   end case;
 end function test-client;

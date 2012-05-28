@@ -8,7 +8,7 @@ define generic get (table :: <symbol-table>, key) => (value);
 define generic delete! (table :: <symbol-table>, key) => ();
 define generic contains?
     (table :: <symbol-table>, key) => (contains-p :: <boolean>);
-define generic keys (table :: <symbol-table>) => (keys);
+define generic keys (table :: <symbol-table>) => (keys :: <iterable>);
 
 define class <key-not-found> (<error>)
   constant slot value, required-init-keyword: value:;
