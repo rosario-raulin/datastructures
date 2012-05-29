@@ -25,7 +25,7 @@ define method put! (table :: <list-table>, new-key, new-value) => ()
 
   block (return)
     while (curr)
-      if (key(curr) = new-key)
+      if (compare-to(key(curr), new-key) = 0)
         curr.value := new-value;
         return(#f);
       else
@@ -43,7 +43,7 @@ define method get (table :: <list-table>, element-key) => (value)
 
   block (return)
     while (curr)
-      if (key(curr) = element-key)
+      if (compare-to(key(curr), element-key) = 0)
         return(value(curr));
       end if;
       curr := next(curr);

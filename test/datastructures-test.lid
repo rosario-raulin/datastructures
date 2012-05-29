@@ -1,5 +1,7 @@
 library:	datastructures-test
 files:	library.dylan
+	comparable/compare-to.dylan
+	comparable/test.dylan
 	fundamentals/stack.dylan
 	fundamentals/queue.dylan
 	fundamentals/test.dylan

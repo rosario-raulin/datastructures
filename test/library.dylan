@@ -28,9 +28,18 @@ define module symbol-tables-test
   export run-symbol-tables-test;
 end module symbol-tables-test;
 
+define module comparable-test
+  use dylan;
+  use format-out;
+  use comparable;
+  
+  export run-comparable-test;
+end module comparable-test;
+
 define module test
   use dylan;
   use format-out;
   use fundamentals-test;
   use symbol-tables-test;
+  use comparable-test;
 end module test;

@@ -20,7 +20,8 @@ define method get-size (tree :: <binary-search-tree>) => (size :: <integer>)
   get-size(root(tree))
 end method get-size;
 
-define method is-empty? (tree :: <binary-search-tree>) => (empty-p :: <boolean>)
+define method is-empty?
+    (tree :: <binary-search-tree>) => (empty-p :: <boolean>)
   root(tree) = #f
 end method is-empty?;
 
@@ -30,9 +31,10 @@ define method put! (tree :: <binary-search-tree>, entry-key, entry-value) => ()
           if (~ node)
             make(<binary-node>, key: entry-key, value: entry-value, size: 1)
           else
+            let cmp :: <integer> = compare-to(key(node), entry-key);
             case
-              (node.key > entry-key) => node.left := put!-intern(left(node));
-              (node.key < entry-key) => node.right := put!-intern(right(node));
+              (cmp > 0) => node.left := put!-intern(left(node));
+              (cmp < 0) => node.right := put!-intern(right(node));
               otherwise => node.value := entry-value;
             end case;
             node.size := get-size(node.left) + get-size(node.right) + 1;
@@ -48,9 +50,10 @@ define method get (table :: <binary-search-tree>, entry-key) => (entry-value)
           if (~ node)
             signal(make(<key-not-found>, value: entry-key));
           else
+            let cmp :: <integer> = compare-to(key(node), entry-key);
             case
-              (key(node) > entry-key) => get-intern(left(node));
-              (key(node) < entry-key) => get-intern(right(node));
+              (cmp > 0) => get-intern(left(node));
+              (cmp < 0) => get-intern(right(node));
               otherwise => value(node);
             end case;
           end if;

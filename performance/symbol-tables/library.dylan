@@ -15,4 +15,5 @@ define module st-performance-test
   use fundamentals;
   use iterator;
   use symbol-tables;
+  use comparable;
 end;

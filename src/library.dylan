@@ -8,6 +8,7 @@ define library datastructures
     datastructures,
     fundamentals,
     iterator,
+    comparable,
     symbol-tables;
 end library datastructures;
 
@@ -34,6 +35,12 @@ define module iterator
     for-each!;
 end module iterator;
 
+define module comparable
+  use common-dylan;
+
+  export compare-to;
+end module comparable;
+
 define module fundamentals
   use common-dylan;
   use datastructures;
@@ -57,6 +64,7 @@ define module symbol-tables
   use datastructures;
   use fundamentals;
   use iterator;
+  use comparable;
 
   export
     <symbol-table>,

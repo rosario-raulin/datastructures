@@ -6,17 +6,11 @@ define class <logging-string> (<object>)
   constant slot content :: <string>, required-init-keyword: content:;
 end class <logging-string>;
 
-define method \=
-    (s1 :: <logging-string>, s2 :: <logging-string>) => (equal-p :: <boolean>)
+define method compare-to
+    (o1 :: <logging-string>, o2 :: <logging-string>) => (result :: <integer>)
   *comparisons* := *comparisons* + 1;
-  content(s1) = content(s2)
-end method \=;
-
-define method \<
-    (s1 :: <logging-string>, s2 :: <logging-string>) => (less-p :: <boolean>)
-  *comparisons* := *comparisons* + 1;
-  content(s1) < content(s2)
-end method \<;
+  compare-to(content(o1), content(o2))
+end method compare-to;
 
 define function tokenize-into-words (input :: <string>)
  => (words :: <iterable>)
@@ -57,6 +51,7 @@ define function main (args :: <vector>) => ()
              "list" => <list-table>;
              otherwise => <binary-search-tree>;
            end select);
+    
     let minimal-key-size :: <integer> = string-to-integer(args[1]);
     let key-to-be-found :: <logging-string> =
       make(<logging-string>, content: args[2]);
@@ -80,7 +75,14 @@ define function main (args :: <vector>) => ()
                else
                  "Could not find %s with %d comparisons.\n"
                end, content(key-to-be-found), *comparisons*);
+  else
+    print-usage(application-name());
   end if;
 end function main;
+
+define inline function print-usage (app-name :: <string>) => ()
+  format-out("usage: %s table-type minimal-word-size lookup-word\n",
+             app-name);
+end function print-usage;
 
 main(application-arguments());
