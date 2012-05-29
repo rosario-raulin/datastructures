@@ -44,7 +44,7 @@ define function tokenize-into-words (input :: <string>)
 end function tokenize-into-words;
 
 define function main (args :: <vector>) => ()
-  if (size(args) >= 3)
+  if (size(args) >= 1)
     let table :: <symbol-table> =
       make(select (args[0] by \=)
              "bst" => <binary-search-tree>;
@@ -52,9 +52,12 @@ define function main (args :: <vector>) => ()
              otherwise => <binary-search-tree>;
            end select);
     
-    let minimal-key-size :: <integer> = string-to-integer(args[1]);
-    let key-to-be-found :: <logging-string> =
-      make(<logging-string>, content: args[2]);
+    let minimal-key-size :: <integer>
+      = if (size(args) >= 2) string-to-integer(args[1]) else 0 end;
+    let key-to-be-found :: <logging-string>
+    = make(<logging-string>, content: if (size(args) >= 3)
+                                        args[2]
+                                      else "foobar" end);
     
     format-out("Note: using table type %=.\n\n", object-class(table));        
     
@@ -75,14 +78,22 @@ define function main (args :: <vector>) => ()
                else
                  "Could not find %s with %d comparisons.\n"
                end, content(key-to-be-found), *comparisons*);
+
+    if (size(args) >= 4 & args[3] = "y")
+      for-each (e :: <logging-string> in keys(table))
+          format-out("%s\n", content(e));
+      end for-each;
+    end if;
   else
     print-usage(application-name());
   end if;
 end function main;
 
+define constant $usage-string :: <string> =
+  "usage: %s table-type [minimal-word-size] [keyword] [print-table?]\n";
+
 define inline function print-usage (app-name :: <string>) => ()
-  format-out("usage: %s table-type minimal-word-size lookup-word\n",
-             app-name);
+  format-out($usage-string, app-name);
 end function print-usage;
 
 main(application-arguments());
